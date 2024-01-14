@@ -1,0 +1,45 @@
+{
+  "name": "esa-backend-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node dist/app.js",
+    "test": "mocha --require ts-node/register --require tsconfig-paths/register test/**/*.test.ts",
+    "dev": "nodemon --watch \"src/**/*.ts\" --exec \"npx ts-node\" src/app.ts",
+    "build": "tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chai": "^4.3.7",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-rate-limit": "^7.1.5",
+    "joi": "^17.11.0",
+    "node-cron": "^3.0.3",
+    "pg": "^8.11.3",
+    "redis": "^4.6.12",
+    "sequelize": "^6.35.2",
+    "sequelize-typescript": "^2.1.6",
+    "simple-mock": "^0.8.0",
+    "sinon": "^17.0.1",
+    "typescript": "^5.3.3"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.3.5",
+    "@types/chai-as-promised": "^7.1.5",
+    "@types/express": "^4.17.21",
+    "@types/mocha": "^10.0.6",
+    "@types/node-cron": "^3.0.11",
+    "@types/simple-mock": "^0.8.6",
+    "@types/sinon": "^17.0.3",
+    "chai-as-promised": "^7.1.1",
+    "mocha": "^10.2.0",
+    "nodemon": "^3.0.2",
+    "ts-mocha": "^10.0.0",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0"
+  }
+}
