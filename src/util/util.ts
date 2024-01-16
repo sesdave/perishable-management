@@ -1,6 +1,9 @@
 export const convertEpochMillisecondsToDatetime = (milliseconds: number | undefined): string | null =>{
     if (milliseconds === undefined || isNaN(milliseconds)) {
-      return null; // Return null for invalid input
+      return null; 
+    }
+    if (milliseconds < Number.MIN_SAFE_INTEGER || milliseconds > Number.MAX_SAFE_INTEGER) {
+      throw new Error('Timestamp is outside the valid range for the Date!!!');
     }
   
     let millisecondsString = milliseconds.toString();
@@ -9,7 +12,6 @@ export const convertEpochMillisecondsToDatetime = (milliseconds: number | undefi
       millisecondsString += '0';
     }
   
-    // Use various Date methods to extract the date and time components
     const date = new Date(parseInt(millisecondsString)); // Convert back to a number
     const year = date.getFullYear();
     const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Month is zero-indexed

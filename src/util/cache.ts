@@ -32,12 +32,11 @@ export const getAsync = async <T>(key: string): Promise<T | null> => {
   
   export const deleteAsync = async (key: string): Promise<boolean> => {
     try {
-      // Use the `del` method to delete the specified key
       const result = await redis.del(key);
       return result === 1;
     } catch (error) {
       console.error('Error deleting key from cache:', error);
-      return false; // Return false to indicate an error
+      return false; 
     }
   };
   

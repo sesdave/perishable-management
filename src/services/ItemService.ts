@@ -4,16 +4,14 @@ import { getAsync, setAsync, deleteAsync } from '../util/cache';
 import { convertEpochMillisecondsToDatetime } from '../util/util'
 import { sequelize } from '../model';
 import { throwCustomError } from '../util/error/errorUtil'
-import LockService from './LockService'; // Adjust the import path
+import LockService from './LockService'; 
 import redis  from '../config/redisClient'; 
 
 export const addLot = async (item: string, quantity: number, expiry: number) => {
-  // Validate input data
   if (!quantity || !expiry) {
     throw new Error('Invalid input data');
   }
   const convertExpiry = convertEpochMillisecondsToDatetime(expiry);
-  console.log(`Converted Expiry ${convertExpiry}`)
   // Add the lot to the database
   const lot = await Lot.create({
     item,
@@ -21,8 +19,6 @@ export const addLot = async (item: string, quantity: number, expiry: number) => 
     expiry: convertExpiry,
   });
 
-
-  // Update the cache
   await updateCache(item);
 };
 
@@ -49,7 +45,6 @@ export const sellItem = async (item: string, quantity: number) => {
         order: [['expiry', 'ASC']], // Order by expiry date ascending
         attributes: ['id', 'quantity', 'expiry'], // Include the 'id' for identification
       });
-      console.log(`Items - ${JSON.stringify(items)}`)
       let availableQuantity = 0;
       let totalQuantity = 0;
 
@@ -80,7 +75,7 @@ export const sellItem = async (item: string, quantity: number) => {
             { quantity: itemQuantity - remainingQuantity },
             {
               where: {
-                id, // Use the 'id' for precise identification
+                id, 
               },
             }
           );
@@ -91,7 +86,7 @@ export const sellItem = async (item: string, quantity: number) => {
             { quantity: 0 }, // Set quantity to 0 for this item
             {
               where: {
-                id, // Use the 'id' for precise identification
+                id,
               },
             }
           );
@@ -99,7 +94,6 @@ export const sellItem = async (item: string, quantity: number) => {
         }
       }
 
-      // Update the cache
       await updateCache(item);
     } else {
       throw new Error(`Unable to Sell: ${item}. Please try again!!`);
@@ -110,7 +104,6 @@ export const sellItem = async (item: string, quantity: number) => {
   } finally {
     if (lock) {
       try {
-        console.log("Lock Released")
         await lockService.releaseLock(lock);
       } catch (error) {
         console.error('Error while releasing lock:', error);
@@ -130,7 +123,7 @@ export const getItemQuantity = async (item: string) => {
         validTill: cachedData.validTill,
       };
     } else {
-      const { quantity, expiry } = await getDatabaseItemQuantity(item); // Use getDatabaseItemData to fetch both quantity and expiry
+      const { quantity, expiry } = await getDatabaseItemQuantity(item);
 
       let validTill: number | null = null; 
 

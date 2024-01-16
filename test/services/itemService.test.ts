@@ -24,7 +24,6 @@ describe('ItemService Test', function(){
 
     // Mock Lot model methods
     simpleMock.mock(Lot, 'create', async () => {
-      // Mock the Lot.create method if needed
       return {
         item: 'mockedItem',
         quantity: 1,
@@ -33,7 +32,7 @@ describe('ItemService Test', function(){
     });
 
     simpleMock.mock(Lot, 'findAll', () => {
-      // Mock the Lot.findAll method if needed
+      // Mock the Lot.findAll method
       return Promise.resolve([
         {
           item: 'mockedItem1',
@@ -54,7 +53,7 @@ describe('ItemService Test', function(){
     });
 
     simpleMock.mock(Lot, 'update', async () => {
-      // Mock the Lot.update method if needed
+      // Mock the Lot.update method 
       return [1]; // Return the number of rows affected
     });
   });
@@ -69,7 +68,6 @@ it('acquireLock should return lock key on success', async () => {
     mockRedis.set.returnWith('OK');
     mockRedis.del.returnWith(1)
   
-    // Call the method you want to test
     await lockService.acquireLock('myLockKey', 1000);
     let output = await lockService.releaseLock('myLockKey');
   

@@ -4,7 +4,6 @@ import { addLot, sellItem, getItemQuantity } from '../services/ItemService';
 
 export const addLotHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    console.log(`In req - ${JSON.stringify(req.body)}`)
     const { item } = req.params;
     const { quantity, expiry } = req.body;
     await addLot(item, quantity, expiry);
@@ -32,8 +31,8 @@ export const sellItemHandler = async (req: Request, res: Response, next: NextFun
 export const getItemQuantityHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { item } = req.params;
-    const quantity = await getItemQuantity(item);
-    return res.status(200).json({ quantity });
+    const data = await getItemQuantity(item);
+    return res.status(200).json(data);
   } catch (error) {
     console.error('Error while fetching item quantity:', error);
     next(error)

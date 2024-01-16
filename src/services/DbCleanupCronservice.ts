@@ -33,4 +33,4 @@ export const clearTableData = async () => {
 };
 
 // Schedule the cleanup task to run daily at midnight
-cron.schedule('0 0 * * *', dbCleanup);
+cron.schedule(process.env.CLEANUP_WINDOW || '0 0 * * *', dbCleanup);

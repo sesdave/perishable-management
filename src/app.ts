@@ -3,7 +3,6 @@ import { sequelize } from './model'
 import itemRoute from './routes/ItemRoutes'
 import { handleErrors } from './middleware/errorHandler'
 import rateLimit from 'express-rate-limit'
-import { dbCleanup } from './services/DbCleanupCronservice'
 
 const app = express()
 
@@ -14,7 +13,6 @@ const rateLimiter = rateLimit({
     max: 100
 })
 
-dbCleanup()
 app.use(rateLimiter) 
 app.use(express.json())
 app.use('', itemRoute)
